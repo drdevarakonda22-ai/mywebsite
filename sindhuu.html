@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Sindhuu Devarakonda | Specialist Dentist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --mint: #e0f2f1;
+            --dark-mint: #26a69a;
+            --blush: #fce4ec;
+            --cream: #fffdfa;
+            --text: #4a4a4a;
+            --accent: #f06292;
+            --gold: #c5a059;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* --- WELCOME POPUP --- */
+        #welcome-modal {
+            display: flex; position: fixed; z-index: 9999;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+            align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+        }
+        #welcome-modal.show { opacity: 1; pointer-events: auto; }
+        
+        .popup-content {
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; width: 90%; max-width: 450px; position: relative;
+            border-top: 6px solid var(--accent); animation: popIn 0.5s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-popup { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #aaa; }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; box-sizing: border-box; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); font-weight: bold; }
+        nav a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: var(--accent); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 100px 5% 50px;
+            background: linear-gradient(135deg, var(--mint) 0%, #fff 50%, var(--blush) 100%);
+        }
+        .hero-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; gap: 40px; }
+        .hero-text { flex: 1; min-width: 300px; }
+        .hero-text h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; color: var(--text); line-height: 1.2; }
+        .subtitle { font-size: 1.2rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        
+        .btn-main {
+            background-color: var(--accent); color: white; padding: 15px 35px;
+            border-radius: 50px; text-decoration: none; font-weight: bold;
+            font-size: 1.1rem; box-shadow: 0 10px 20px rgba(240, 98, 146, 0.3);
+            transition: 0.3s; border: none; cursor: pointer; display: inline-block;
+        }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(240, 98, 146, 0.5); }
+
+        /* Organic Image */
+        .hero-image { flex: 1; display: flex; justify-content: center; min-width: 300px; }
+        .blob-wrapper { width: 400px; height: 400px; position: relative; animation: float 6s ease-in-out infinite; }
+        .organic-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 8px solid white;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+
+        /* --- ABOUT YOUR DENTIST SECTION --- */
+        .about-section {
+            padding: 100px 5%;
+            background: white;
+            position: relative; /* Needed for background image positioning */
+            overflow: hidden; /* Ensures image doesn't scroll bar if it sticks out */
+        }
+
+        /* NEW: Background Decoration Image */
+        .about-bg-decoration {
+            position: absolute;
+            top: 0px;
+            right: 150px;
+            width: 500px;
+            height: 500px;
+            /* PASTE YOUR BACKGROUND IMAGE LINK HERE BELOW */
+            background-image: url('https://lh3.googleusercontent.com/d/1xYrD8xj1kBwcxlpRoIGPRVO1Asyj9XzQ');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5; /* Low transparency */
+            z-index: 0; /* Behind text */
+            transform: rotate(0deg); /* Artistic tilt */
+            border-radius: 30px;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1; /* Above background image */
+        }
+        
+        .about-text { flex: 1; min-width: 300px; }
+        .about-heading { font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--dark-mint); margin-bottom: 20px; }
+        .about-desc { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; }
+        
+        .credentials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .credential-item {
+            display: flex; align-items: center; gap: 15px;
+            background: var(--mint); padding: 15px; border-radius: 10px;
+        }
+        .cred-icon { font-size: 1.5rem; color: var(--accent); }
+        .cred-text { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-section { padding: 80px 0; background-color: var(--cream); text-align: center; }
+        .section-title { font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 30px; color: var(--text); }
+        .scroll-container {
+            display: flex; overflow-x: auto; gap: 30px; padding: 20px 5%;
+            scroll-snap-type: x mandatory; scrollbar-width: none;
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
+        .scroll-item { flex: 0 0 320px; scroll-snap-align: center; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .photo-card { background: white; height: 450px; display: flex; flex-direction: column; }
+        .photo-card img { width: 100%; height: 320px; object-fit: cover; }
+        .photo-caption { padding: 20px; text-align: left; }
+        .scroll-hint { font-size: 0.9rem; color: #888; margin-top: 10px; }
+
+        /* --- CONTACT --- */
+        .contact-section { padding: 80px 5%; background: white; text-align: center; }
+        .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+        .contact-btn {
+            display: flex; align-items: center; gap: 10px; padding: 15px 30px;
+            border-radius: 50px; text-decoration: none; color: white; font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-call { background-color: var(--dark-mint); }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-map { background-color: #4285F4; }
+        .contact-btn:hover { transform: translateY(-3px); }
+
+        /* --- SERVICES MODAL (Expanded) --- */
+        #services-modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto;
+            background-color: rgba(0,0,0,0.4); backdrop-filter: blur(5px); padding-top: 40px;
+        }
+        .modal-content {
+            background-color: #fff; margin: 2% auto 50px; padding: 40px; border-radius: 20px;
+            width: 85%; max-width: 900px; position: relative; animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp { from {transform: translateY(50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+        
+        .service-category { margin-bottom: 30px; border-bottom: 1px dashed #ddd; padding-bottom: 20px; }
+        .service-category h3 { color: var(--dark-mint); font-family: 'Playfair Display'; font-size: 1.5rem; margin-bottom: 15px; }
+        .service-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        .service-item { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #555; }
+        .service-item i { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .hero-content { flex-direction: column-reverse; text-align: center; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .about-container { flex-direction: column; }
+            .blob-wrapper { width: 300px; height: 300px; margin: 0 auto; }
+            .credentials-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-modal">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">×</span>
+            <h2 style="color:var(--dark-mint); margin-bottom:10px;">Welcome!</h2>
+            <span style="color:var(--accent); font-weight:bold; font-size:1.1rem; display:block; margin-bottom:20px;">
+                ✨ Free Consultation & 3D Scan ✨
+            </span>
+            <p style="margin-bottom:25px; color:#666;">Start your smile journey with us today.</p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <a href="tel:7702088089" class="btn-main" style="padding:10px 25px; font-size:0.9rem;">Call Now</a>
+                <a href="https://wa.me/917702088089" class="btn-main" style="background:#25D366; padding:10px 25px; font-size:0.9rem;">WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">Dr. Sindhuu Devarakonda</div>
+        <nav>
+            <a href="#" onclick="openModal()">Services</a>
+            <a href="#about">About</a>
+            <a href="#testimonials">Smiles</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Dr. Sindhuu Devarakonda</h1>
+                <p class="subtitle">
+                    Laser & Implant Specialist.<br>
+                    Crafting beautiful smiles with a gentle touch.
+                </p>
+                <button class="btn-main" onclick="openModal()">View All Services</button>
+            </div>
+            <div class="hero-image">
+                <div class="blob-wrapper">
+                    <img src="https://lh3.googleusercontent.com/d/1muCRGIUJy0ChYtvH2P15A6VGp8CuBvOC"
+                         alt="Dr. Sindhuu Devarakonda" class="organic-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-bg-decoration"></div>
+
+        <div class="about-container">
+            <div class="about-text">
+                <h2 class="about-heading">About Your Dentist</h2>
+                <p class="about-desc">
+                <b>Dr. Sindhu Devarakonda</b> is a dedicated Dental Surgeon and Root Canal Specialist known for delivering gentle, precise, and patient-focused care. With extensive clinical experience and over 8000 successful root canal treatments performed, she has built a strong reputation for excellence in painless dentistry. Her approach combines advanced techniques, modern equipment, and a calm, reassuring treatment style that helps patients feel comfortable and confident throughout their dental journey.<br><br>
+
+                She specializes in restorative and cosmetic dental procedures, including smile designing, crowns and bridges, dental implants, and preventive oral care. Dr. Sindhu is committed to maintaining the highest standards of sterilization and safety while ensuring every treatment is tailored to the individual needs of her patients. Her goal is not just to treat dental problems, but to create long-term oral health and confident smiles.
+                </p>
+                
+                <div class="credentials-grid">
+                    <div class="credential-item">
+                        <i class="fas fa-graduation-cap cred-icon"></i>
+                        <span class="cred-text">S. Nijalingappa Dental College Alumni</span>
+                    </div>
+                    <div class="credential-item">
+                        <i class="fas fa-microscope cred-icon"></i>
+                        <span class="cred-text">Fellowship in Laser (Manipal)</span>
+                    </div>
+                    <div class="credential-item">
+                        <i class="fas fa-tooth cred-icon"></i>
+                        <span class="cred-text">8,000+ Successful RCTs</span>
+                    </div>
+                    <div class="credential-item">
+                        <i class="fas fa-magic cred-icon"></i>
+                        <span class="cred-text">Painless & Laser Specialist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <h2 class="section-title">Gallery of Stories</h2>
+        <div class="scroll-container">
+            <div class="scroll-item photo-card">
+                <img src="https://lh3.googleusercontent.com/d/1t99fahRl-lD0P-tqPGpK7BJFLH76OpjF" alt="Smile Transformation">
+                <div class="photo-caption">
+                    <strong>Smile Makeover</strong>
+                    <p>"Natural veneers that changed my look."</p>
+                </div>
+            </div>
+            <div class="scroll-item photo-card">
+                <img src="https://lh3.googleusercontent.com/d/13ZfNs1sce633QM53Bgmq4XZRtBVnfU4c" alt="Smile Transformation">
+                <div class="photo-caption">
+                    <strong>Aligner Results</strong>
+                    <p>"Straight teeth without braces!"</p>
+                </div>
+            </div>
+            <div class="scroll-item photo-card" style="justify-content:center; background:var(--mint); padding:20px;">
+                <p style="font-style:italic; font-size:1.1rem;">"I was so nervous until I met my best Dentist"</p>
+                <strong>- Vishnu S.</strong>
+            </div>
+             <div class="scroll-item photo-card">
+                <img src="https://lh3.googleusercontent.com/d/1mU9ow52VBdA8sHnJq0kDDIlzmIJiOSgC" alt="Smile Transformation">
+                <div class="photo-caption">
+                    <strong>Implant Restoration</strong>
+                    <p>"Function and aesthetics restored."</p>
+                </div>
+            </div>
+            <div class="scroll-item photo-card" style="justify-content:center; background:var(--mint); padding:20px;">
+                <p style="font-style:italic; font-size:1.1rem;">"Dr. Sindhuu's laser treatment was completely painless. I was amazed!"</p>
+                <strong>- Anjali R.</strong>
+            </div>
+        </div>
+        <div class="scroll-hint"><i class="fas fa-hand-pointer"></i> Swipe to see more</div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 style="font-family:'Playfair Display'; margin-bottom:10px;">Visit Us</h2>
+        <p style="margin-bottom:40px; color:#777;">We are here to help you smile.</p>
+        
+        <div class="contact-grid">
+            <a href="https://wa.me/917702088089" class="contact-btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="tel:7702088089" class="contact-btn btn-call">
+                <i class="fas fa-phone-alt"></i> Call Us
+            </a>
+            <a href="https://instagram.com/sindhuudevarakonda5" class="contact-btn btn-instagram">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Smile+Dental+Hyderabad" class="contact-btn btn-map">
+                <i class="fas fa-map-marker-alt"></i> Get Directions
+            </a>
+        </div>
+        
+        <footer style="margin-top:50px; opacity:0.6; font-size:0.8rem;">
+            © 2026 Dr. Sindhuu Devarakonda. All rights reserved.
+        </footer>
+    </section>
+
+    <div id="services-modal">
+        <div class="modal-content">
+            <span class="close-popup" style="float:right; position:relative; top:-10px;" onclick="closeModal()">×</span>
+            <h2 style="text-align:center; font-family:'Playfair Display'; color:var(--dark-mint); margin-bottom:30px;">Our Treatments</h2>
+            
+            <div class="service-category">
+                <h3>Endodontics (Root Canal)</h3>
+                <div class="service-list">
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Single Sitting RCT</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Laser Assisted RCT</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Re-Root Canal Treatment</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Post & Core Build-up</div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3>Cosmetic Dentistry</h3>
+                <div class="service-list">
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Digital Smile Design</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Ceramic Veneers</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Teeth Whitening</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Laser Gum Contouring</div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3>Implantology</h3>
+                <div class="service-list">
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Single Tooth Implants</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Full Mouth Rehabilitation</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Bone Grafting</div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3>General Dentistry</h3>
+                <div class="service-list">
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Scaling & Polishing</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Tooth Colored Fillings</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Extractions</div>
+                    <div class="service-item"><i class="fas fa-check-circle"></i> Kids Dentistry</div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:30px;">
+                <button class="btn-main" onclick="closeModal(); document.getElementById('contact').scrollIntoView();">Book Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() { document.getElementById("services-modal").style.display = "block"; document.body.style.overflow = "hidden"; }
+        function closeModal() { document.getElementById("services-modal").style.display = "none"; document.body.style.overflow = "auto"; }
+        function closePopup() { document.getElementById('welcome-modal').classList.remove('show'); }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("services-modal")) { closeModal(); }
+        }
+
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('welcome-modal').classList.add('show');
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

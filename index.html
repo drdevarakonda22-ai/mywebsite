@@ -18,6 +18,10 @@
             --gold: #c5a059;
         }
 
+        * {
+            box-sizing: border-box; /* Ensures padding doesn't break layout */
+        }
+
         body {
             margin: 0;
             font-family: 'Quicksand', sans-serif;
@@ -52,17 +56,19 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; box-sizing: border-box; z-index: 1000;
+            padding: 15px 5%; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
         .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); font-weight: bold; }
-        nav a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; transition: 0.3s; }
+        nav { display: flex; align-items: center; }
+        nav a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; transition: 0.3s; white-space: nowrap; }
         nav a:hover { color: var(--accent); }
 
         /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 100px 5% 50px;
+            padding: 120px 5% 50px; /* Added top padding for mobile header */
             background: linear-gradient(135deg, var(--mint) 0%, #fff 50%, var(--blush) 100%);
         }
         .hero-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; gap: 40px; }
@@ -92,25 +98,25 @@
         .about-section {
             padding: 100px 5%;
             background: white;
-            position: relative; /* Needed for background image positioning */
-            overflow: hidden; /* Ensures image doesn't scroll bar if it sticks out */
+            position: relative;
+            overflow: hidden;
         }
 
-        /* NEW: Background Decoration Image */
+        /* Background Decoration Image */
         .about-bg-decoration {
             position: absolute;
             top: 0px;
             right: 150px;
             width: 500px;
             height: 500px;
-            /* PASTE YOUR BACKGROUND IMAGE LINK HERE BELOW */
-            background-image: url('https://lh3.googleusercontent.com/d/1xYrD8xj1kBwcxlpRoIGPRVO1Asyj9XzQ');
+            background-image: url('https://lh3.googleusercontent.com/d/PASTE_ID_HERE');
             background-size: cover;
             background-position: center;
-            opacity: 0.5; /* Low transparency */
-            z-index: 0; /* Behind text */
-            transform: rotate(0deg); /* Artistic tilt */
+            opacity: 0.5;
+            z-index: 0;
+            transform: rotate(0deg);
             border-radius: 30px;
+            pointer-events: none; /* Allows clicking through the image */
         }
 
         .about-container {
@@ -121,7 +127,7 @@
             gap: 50px;
             align-items: center;
             position: relative;
-            z-index: 1; /* Above background image */
+            z-index: 1;
         }
         
         .about-text { flex: 1; min-width: 300px; }
@@ -154,7 +160,7 @@
         .contact-section { padding: 80px 5%; background: white; text-align: center; }
         .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
         .contact-btn {
-            display: flex; align-items: center; gap: 10px; padding: 15px 30px;
+            display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 30px;
             border-radius: 50px; text-decoration: none; color: white; font-weight: bold;
             transition: 0.3s;
         }
@@ -164,7 +170,7 @@
         .btn-map { background-color: #4285F4; }
         .contact-btn:hover { transform: translateY(-3px); }
 
-        /* --- SERVICES MODAL (Expanded) --- */
+        /* --- SERVICES MODAL --- */
         #services-modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0;
             width: 100%; height: 100%; overflow: auto;
@@ -182,12 +188,33 @@
         .service-item { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #555; }
         .service-item i { color: var(--accent); }
 
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 768px) {
-            .hero-content { flex-direction: column-reverse; text-align: center; }
+            /* Header: Stack logo and scrollable nav */
+            header { padding: 10px 5%; flex-direction: column; gap: 10px; background: rgba(255,255,255,0.98); }
+            nav { width: 100%; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
+            nav a { margin-left: 0; margin-right: 20px; font-size: 0.95rem; }
+            
+            /* Hero: Stack text and image */
+            .hero-content { flex-direction: column-reverse; text-align: center; gap: 30px; }
             .hero-text h1 { font-size: 2.5rem; }
+            .blob-wrapper { width: 280px; height: 280px; margin: 0 auto; }
+            .organic-img { border-width: 5px; }
+
+            /* About: Adjust background image and stack content */
             .about-container { flex-direction: column; }
-            .blob-wrapper { width: 300px; height: 300px; margin: 0 auto; }
+            .about-bg-decoration { 
+                width: 300px; height: 300px; 
+                right: -50px; top: 20px; 
+                opacity: 0.2; /* Faded more on mobile for readability */
+            }
             .credentials-grid { grid-template-columns: 1fr; }
+
+            /* Contact: Full width buttons */
+            .contact-btn { width: 100%; margin-bottom: 10px; }
+            
+            /* Modal: Smaller padding */
+            .modal-content { padding: 25px; width: 90%; margin-top: 20%; }
         }
     </style>
 </head>
